@@ -13,8 +13,9 @@
   <livewire:styles />
 </head>
 <body>
-    <livewire:comments />
-
-    <livewire:scripts />
+  <livewire:comments />
+  
+  <livewire:scripts />
+  @stack('script')
 </body>
 </html>

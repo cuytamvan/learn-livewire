@@ -1,0 +1,30 @@
+body {
+  font-family: "Ubuntu", sans-serif;
+}
+
+.card-custom {
+  border: none;
+  box-shadow: 0px 0px 8px 8px rgba(3, 3, 3, 0.05);
+  border-radius: 10px;
+}
+
+.card-custom .content {
+  position: relative;
+  color: #555;
+  font-size: 0.9em;
+}
+
+.card-custom .delete-post {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  display: inline-block;
+  padding: 5px;
+}
+
+.card-custom .delete-post:hover {
+  color: #ef5350;
+}
+

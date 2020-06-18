@@ -18,12 +18,14 @@ class Comments extends Component
     use WithPagination, WithFileUploads;
     // public $comments = [];
     public $body, $image;
+    public $ticketId = 1;
 
     protected $validation = [
         'body' => 'required|string|max:255',
     ];
     protected $listeners = [
-        'fileUpload' => 'handleFileUpload'
+        'fileUpload' => 'handleFileUpload',
+        'ticketSelected', // amun boga emit jeung fungsi nu sama, bisa di deklarasi keun kos kieu
     ];
 
     // fungsi na okos constructor 
@@ -44,7 +46,8 @@ class Comments extends Component
         $data = Comment::create([
             'body' => $this->body,
             'image' => $image,
-            'user_id' => 1
+            'user_id' => 1,
+            'support_ticket_id' => $this->ticketId,
         ]);
         // $this->comments->prepend($data); // refresh data / add new data
         $this->body = '';
@@ -58,7 +61,12 @@ class Comments extends Component
 
     public function deleteComment($id){
         $data = Comment::find($id);
-        if($data) $data->delete();
+        if($data) {
+            $path = 'comments/'.$data->image;
+            Storage::disk('public')->delete($path);
+
+            $data->delete();
+        }
 
         // $this->comments = $this->comments->where('id', '!=', $id);
         // $this->comments = $this->comments->except($id);
@@ -73,19 +81,23 @@ class Comments extends Component
         $this->image = $img;
     }
 
+    public function ticketSelected($id){
+        $this->ticketId = $id;
+    }
+
     public function storeImage(){
         if(!$this->image) return null;
 
         $img  = ImageManagerStatic::make($this->image)->encode('jpg');
-        $path = 'public/comments/';
+        $path = 'comments/';
         $rand = Carbon::now()->timestamp.'_'.uniqid().'.jpg';
 
-        Storage::put($path.$rand, $img);
+        Storage::disk('public')->put($path.$rand, $img);
         return $rand;
     }
 
     public function render(){
-        $comments = Comment::latest()->paginate(10);
+        $comments = Comment::where('support_ticket_id', $this->ticketId)->latest()->paginate(5);
         return view('livewire.comment', compact('comments'));
     }
 }

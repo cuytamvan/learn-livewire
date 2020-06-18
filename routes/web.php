@@ -13,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $comments = \App\Comment::orderBy('created_at', 'desc')->get();
-    return view('app', compact('comments'));
-});
+// Route::get('/', function () {
+//     return view('app');
+// });
+
+Route::livewire('', 'home')->name('home');
+Route::livewire('login', 'login')->name('login');

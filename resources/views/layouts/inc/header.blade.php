@@ -9,6 +9,9 @@
         <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link {{ Route::is('register') ? 'active' : '' }}" href="{{ url('register') }}">Register</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link {{ Route::is('login') ? 'active' : '' }}" href="{{ url('login') }}">Login</a>
       </li>
     </ul>

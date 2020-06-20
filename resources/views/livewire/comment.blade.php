@@ -38,7 +38,11 @@
           <span class="delete-post" wire:click="deleteComment({{ $r->id }})">&times;</span>
           <p class="content">{{ $r->body }}</p>
           @if ($r->image)
-            <img src="{{ $r->image_path }}" alt="Post {{ $r->creator->name ?? '' }}" class="w-50 rounded">
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <img src="{{ $r->image_path }}" alt="Post {{ $r->creator->name ?? '' }}" class="w-100 rounded">
+              </div>
+            </div>
           @endif
         </div>
       </div>

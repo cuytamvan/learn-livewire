@@ -11,7 +11,7 @@ use Carbon\Carbon;
 use App\Comment;
 
 use ImageManagerStatic;
-use Storage;
+use Storage, Auth;
 
 class Comments extends Component
 {
@@ -42,11 +42,12 @@ class Comments extends Component
     public function addComment(){
         $this->validate($this->validation);
 
+        $user_id = Auth::user()->id;
         $image = $this->storeImage();
         $data = Comment::create([
             'body' => $this->body,
             'image' => $image,
-            'user_id' => 1,
+            'user_id' => $user_id,
             'support_ticket_id' => $this->ticketId,
         ]);
         // $this->comments->prepend($data); // refresh data / add new data

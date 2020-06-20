@@ -11,6 +11,8 @@
     @if ($msg = session('message'))
       <div class="alert alert-{{ $msg['color'] }}" role="alert">{{ $msg['message'] }}</div>
     @endif
+
+    @auth
     <form wire:submit.prevent="addComment">
       <section>
         <div>
@@ -27,6 +29,7 @@
         <button class="btn btn-primary mt-2">Submit</button>
       </div>
     </form>
+    @endauth
 
     <div class="content">
       @foreach ($comments as $r)
@@ -35,7 +38,11 @@
           <p>
             {{ $r->creator->name ?? '-' }} <small class="text-muted">{{ $r->created_at->diffForHumans() }}</small>
           </p>
-          <span class="delete-post" wire:click="deleteComment({{ $r->id }})">&times;</span>
+
+          @if (Auth::check() && Auth::user()->id == $r->user_id)
+            <span class="delete-post" wire:click="deleteComment({{ $r->id }})">&times;</span>
+          @endif
+
           <p class="content">{{ $r->body }}</p>
           @if ($r->image)
             <div class="row">

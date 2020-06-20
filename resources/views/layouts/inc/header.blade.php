@@ -8,12 +8,18 @@
       <li class="nav-item">
         <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
       </li>
+      @auth()
+      <livewire:logout />
+      @endauth
+
+      @guest
       <li class="nav-item">
-        <a class="nav-link {{ Route::is('register') ? 'active' : '' }}" href="{{ url('register') }}">Register</a>
+        <a href="{{ url('register') }}" class="nav-link {{ Route::is('register') ? 'active' : '' }}">Register</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ Route::is('login') ? 'active' : '' }}" href="{{ url('login') }}">Login</a>
+        <a href="{{ url('login') }}" class="nav-link {{ Route::is('login') ? 'active' : '' }}">Login</a>
       </li>
+      @endguest
     </ul>
   </div>
 </nav>
